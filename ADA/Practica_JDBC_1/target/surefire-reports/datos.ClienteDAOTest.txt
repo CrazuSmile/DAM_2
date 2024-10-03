@@ -1,0 +1,19 @@
+-------------------------------------------------------------------------------
+Test set: datos.ClienteDAOTest
+-------------------------------------------------------------------------------
+Tests run: 4, Failures: 1, Errors: 0, Skipped: 0, Time elapsed: 0.319 s <<< FAILURE! - in datos.ClienteDAOTest
+testSeleccionar  Time elapsed: 0.286 s  <<< FAILURE!
+org.opentest4j.AssertionFailedError: 
+expected: java.util.ArrayList@2f3cd727<[Cliente:
+ID = 5
+ Saldo = 0.0
+ Limite de credito = 0.0
+ Descuento = 0.0
+]> but was: java.util.ArrayList@1af82ba8<[Cliente:
+ID = 5
+ Saldo = 0.0
+ Limite de credito = 0.0
+ Descuento = 0.0
+]>
+	at datos.ClienteDAOTest.testSeleccionar(ClienteDAOTest.java:50)
+
