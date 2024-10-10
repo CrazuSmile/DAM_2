@@ -16,6 +16,7 @@ import domain.Cliente;
 public class ClienteDAO {
 
     private static final String SQL_SELECT = "SELECT id_cliente, saldo, limite_credito, descuento FROM cliente";
+    private static final String SQL_SELECTONE = "SELECT * FROM cliente WHERE id_cliente = ?";
     private static final String SQL_INSERT = "INSERT INTO cliente (saldo, limite_credito, descuento) VALUES (?,?,?)";
     private static final String SQL_UPDATE = "UPDATE cliente SET saldo = ?, limite_credito = ?, descuento = ? WHERE id_cliente = ?";
     private static final String SQL_DELETE = "DELETE FROM cliente WHERE id_cliente = ?";
@@ -39,6 +40,40 @@ public class ClienteDAO {
                 float descuento = rs.getFloat("descuento");
                 cliente = new Cliente(idCliente, saldo, limiteCredito, descuento);
                 clientes.add(cliente);
+            }
+
+        } catch (SQLException ex) {
+            ex.printStackTrace(System.out);
+        } finally {
+            Conexion.close(conn);
+            Conexion.close(rs);
+            Conexion.close(stmt);
+        }
+
+        return clientes;
+    }
+
+    public List<Cliente> seleccionarOne(Cliente clienteID) throws SQLException {
+        Connection conn = null;
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        Cliente cliente = null;
+        List<Cliente> clientes = new ArrayList<>();
+
+        try {
+            conn = getConnection();
+            stmt = conn.prepareStatement(SQL_SELECTONE);
+            stmt.setInt(1, clienteID.getIdCliente());
+            rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                int idCliente = rs.getInt("id_cliente");
+                float saldo = rs.getFloat("saldo");
+                float limiteCredito = rs.getFloat("limite_credito");
+                float descuento = rs.getFloat("descuento");
+                cliente = new Cliente(idCliente, saldo, limiteCredito, descuento);
+                clientes.add(cliente);
+
             }
 
         } catch (SQLException ex) {

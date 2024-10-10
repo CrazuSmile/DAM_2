@@ -4,22 +4,23 @@
  */
 package domain;
 
-import java.time.LocalDate;
+import java.sql.Date;
 
 /**
  *
  * @author juasanlop2
  */
 public class Pedido {
+
     private int idPedido;
     private int idCliente;
-    private LocalDate fecha;
+    private Date fecha;
     private int numero;
     private String calle;
     private String comuna;
     private String ciudad;
 
-    public Pedido(int idPedido, int idCliente, LocalDate fecha, int numero, String calle, String comuna, String ciudad) {
+    public Pedido(int idPedido, int idCliente, Date fecha, int numero, String calle, String comuna, String ciudad) {
         this.idPedido = idPedido;
         this.idCliente = idCliente;
         this.fecha = fecha;
@@ -33,7 +34,7 @@ public class Pedido {
         this.idPedido = idPedido;
     }
 
-    public Pedido(int idCliente, LocalDate fecha, int numero, String calle, String comuna, String ciudad) {
+    public Pedido(int idCliente, Date fecha, int numero, String calle, String comuna, String ciudad) {
         this.idCliente = idCliente;
         this.fecha = fecha;
         this.numero = numero;
@@ -53,7 +54,7 @@ public class Pedido {
         return idCliente;
     }
 
-    public LocalDate getFecha() {
+    public Date getFecha() {
         return fecha;
     }
 
@@ -77,7 +78,7 @@ public class Pedido {
         this.idPedido = idPedido;
     }
 
-    public void setFecha(LocalDate fecha) {
+    public void setFecha(Date fecha) {
         this.fecha = fecha;
     }
 
@@ -101,4 +102,5 @@ public class Pedido {
     public String toString() {
         return "Pedido: \n" + "idPedido: " + idPedido + ", idCliente: " + idCliente + ", fecha: " + fecha + "\n numero: " + numero + ", calle: " + calle + ", comuna: " + comuna + ", ciudad: " + ciudad + '\n';
     }
+
 }

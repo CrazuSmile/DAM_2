@@ -5,7 +5,7 @@
 package datos;
 
 import static datos.Conexion.getConnection;
-import domain.Direccion;
+import domain.DetallePedido;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -17,20 +17,20 @@ import java.util.List;
  *
  * @author juasanlop2
  */
-public class DireccionDAO {
+public class DetallePedidoDAO {
 
-    private static final String SQL_SELECT = "SELECT id_direccion, id_cliente, numero, calle, comuna, ciudad FROM direcciones_envio";
-    private static final String SQL_SELECTONE = "SELECT * FROM direccion_envio WHERE id_direccion = ?";
-    private static final String SQL_INSERT = "INSERT INTO direcciones_envio (numero, calle, comuna, ciudad) VALUES (?,?,?,?,?)";
-    private static final String SQL_UPDATE = "UPDATE direcciones_envio SET numero = ?, calle = ?, comuna = ?, ciudad = ? WHERE id_direcciones = ?";
-    private static final String SQL_DELETE = "DELETE FROM direcciones WHERE id_direcciones = ?";
+    private static final String SQL_SELECT = "SELECT * FROM detalle_pedido";
+    private static final String SQL_SELECTONE = "SELECT * FROM detalle_pedido WHERE id_pedido = ?";
+    private static final String SQL_INSERT = "INSERT INTO detalle_pedido (id_articulo, cantidad) VALUES (?,?)";
+    private static final String SQL_UPDATE = "UPDATE detalle_pedido SET id_articulo = ?, cantidad = ? WHERE id_pedido = ?";
+    private static final String SQL_DELETE = "DELETE FROM detalle_pedido WHERE id_pedido = ?";
 
-    public List<Direccion> seleccionar() throws SQLException {
+    public List<DetallePedido> seleccionar() throws SQLException {
         Connection conn = null;
         PreparedStatement stmt = null;
         ResultSet rs = null;
-        Direccion direccion = null;
-        List<Direccion> direcciones = new ArrayList<>();
+        DetallePedido detalle = null;
+        List<DetallePedido> detalles = new ArrayList<>();
 
         try {
             conn = getConnection();
@@ -38,14 +38,11 @@ public class DireccionDAO {
             rs = stmt.executeQuery();
 
             while (rs.next()) {
-                int idDireccion = rs.getInt("id_direccion");
-                int idCliente = rs.getInt("id_cliente");
-                int numero = rs.getInt("numero");
-                String calle = rs.getString("calle");
-                String comuna = rs.getString("comuna");
-                String ciudad = rs.getString("ciudad");
-                direccion = new Direccion(idDireccion, idCliente, numero, calle, comuna, ciudad);
-                direcciones.add(direccion);
+                int idPedido = rs.getInt(detalle.getIdPedido());
+                int idArticulo = rs.getInt(detalle.getIdArticulo());
+                int cantidad = rs.getInt(detalle.getCantidad());
+                detalle = new DetallePedido(idPedido, idArticulo, cantidad);
+                detalles.add(detalle);
             }
 
         } catch (SQLException ex) {
@@ -56,31 +53,27 @@ public class DireccionDAO {
             Conexion.close(stmt);
         }
 
-        return direcciones;
+        return detalles;
     }
-
-    public List<Direccion> seleccionarOne(Direccion direccionId) throws SQLException {
+    public List<DetallePedido> seleccionarOne(DetallePedido detalleId) throws SQLException {
         Connection conn = null;
         PreparedStatement stmt = null;
         ResultSet rs = null;
-        Direccion direccion = null;
-        List<Direccion> direcciones = new ArrayList<>();
+        DetallePedido detalle = null;
+        List<DetallePedido> detalles = new ArrayList<>();
 
         try {
             conn = getConnection();
             stmt = conn.prepareStatement(SQL_SELECTONE);
-            stmt.setInt(1, direccionId.getIdDircciones());
+            stmt.setInt(1, detalleId.getIdPedido());
             rs = stmt.executeQuery();
 
             while (rs.next()) {
-                int idDireccion = rs.getInt("id_direccion");
-                int idCliente = rs.getInt("id_cliente");
-                int numero = rs.getInt("numero");
-                String calle = rs.getString("calle");
-                String comuna = rs.getString("comuna");
-                String ciudad = rs.getString("ciudad");
-                direccion = new Direccion(idDireccion, idCliente, numero, calle, comuna, ciudad);
-                direcciones.add(direccion);
+                int idPedido = rs.getInt(detalle.getIdPedido());
+                int idArticulo = rs.getInt(detalle.getIdArticulo());
+                int cantidad = rs.getInt(detalle.getCantidad());
+                detalle = new DetallePedido(idPedido, idArticulo, cantidad);
+                detalles.add(detalle);
             }
 
         } catch (SQLException ex) {
@@ -91,10 +84,10 @@ public class DireccionDAO {
             Conexion.close(stmt);
         }
 
-        return direcciones;
+        return detalles;
     }
 
-    public int insertar(Direccion direccion) {
+    public int insertar(DetallePedido detalle) {
         Connection conn = null;
         PreparedStatement stmt = null;
 
@@ -103,10 +96,8 @@ public class DireccionDAO {
         try {
             conn = Conexion.getConnection();
             stmt = conn.prepareStatement(SQL_INSERT);
-            stmt.setInt(1, direccion.getNumero());
-            stmt.setString(2, direccion.getCalle());
-            stmt.setString(3, direccion.getComuna());
-            stmt.setString(4, direccion.getCiudad());
+            stmt.setInt(1, detalle.getIdArticulo());
+            stmt.setInt(2, detalle.getCantidad());
             registros = stmt.executeUpdate();
 
         } catch (SQLException ex) {
@@ -123,7 +114,7 @@ public class DireccionDAO {
         return registros;
     }
 
-    public int update(Direccion direccionId, Direccion direccion) {
+    public int update(DetallePedido detalleId, DetallePedido detalle) {
         Connection conn = null;
         PreparedStatement stmt = null;
 
@@ -132,11 +123,9 @@ public class DireccionDAO {
         try {
             conn = Conexion.getConnection();
             stmt = conn.prepareStatement(SQL_UPDATE);
-            stmt.setInt(1, direccion.getNumero());
-            stmt.setString(2, direccion.getCalle());
-            stmt.setString(3, direccion.getComuna());
-            stmt.setString(4, direccion.getCiudad());
-            stmt.setInt(5, direccionId.getIdDircciones());
+            stmt.setInt(1, detalle.getIdArticulo());
+            stmt.setInt(2, detalle.getCantidad());
+            stmt.setInt(3, detalleId.getIdPedido());
             registros = stmt.executeUpdate();
 
         } catch (SQLException ex) {
@@ -153,7 +142,7 @@ public class DireccionDAO {
         return registros;
     }
 
-    public int delete(Direccion direccionId) {
+    public int delete(DetallePedido detalleId) {
         Connection conn = null;
         PreparedStatement stmt = null;
 
@@ -162,7 +151,7 @@ public class DireccionDAO {
         try {
             conn = Conexion.getConnection();
             stmt = conn.prepareStatement(SQL_DELETE);
-            stmt.setInt(1, direccionId.getIdDircciones());
+            stmt.setInt(1, detalleId.getIdPedido());
             registros = stmt.executeUpdate();
 
         } catch (SQLException ex) {
