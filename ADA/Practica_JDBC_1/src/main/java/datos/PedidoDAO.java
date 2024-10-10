@@ -7,7 +7,7 @@ package datos;
 import static datos.Conexion.getConnection;
 import domain.Pedido;
 import java.sql.Connection;
-import java.sql.Date;
+import java.sql.*;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -41,7 +41,7 @@ public class PedidoDAO {
             while (rs.next()) {
                 int idPedido = rs.getInt("id_pedido");
                 int idCliente = rs.getInt("idCliente");
-                Date fechaPedido = rs.getDate("fecha_pedido");
+                Timestamp fechaPedido = rs.getTimestamp("fecha_pedido");
                 int numero = rs.getInt("numero");
                 String calle = rs.getString("Calle");
                 String comuna = rs.getString("Comuna");
@@ -77,7 +77,7 @@ public class PedidoDAO {
             while (rs.next()) {
                 int idPedido = rs.getInt("id_pedido");
                 int idCliente = rs.getInt("idCliente");
-                Date fechaPedido = rs.getDate("fecha_pedido");
+                Timestamp fechaPedido = rs.getTimestamp("fecha_pedido");
                 int numero = rs.getInt("numero");
                 String calle = rs.getString("Calle");
                 String comuna = rs.getString("Comuna");
@@ -107,7 +107,7 @@ public class PedidoDAO {
             conn = Conexion.getConnection();
             stmt = conn.prepareStatement(SQL_INSERT);
             stmt.setInt(1, pedido.getIdCliente());
-            stmt.setDate(2, pedido.getFecha());
+            stmt.setTimestamp(2, pedido.getFecha());
             stmt.setInt(3, pedido.getNumero());
             stmt.setString(4, pedido.getCalle());
             stmt.setString(5, pedido.getComuna());
@@ -138,7 +138,7 @@ public class PedidoDAO {
             conn = Conexion.getConnection();
             stmt = conn.prepareStatement(SQL_UPDATE);
             stmt.setInt(1, pedido.getIdCliente());
-            stmt.setDate(2, pedido.getFecha());
+            stmt.setTimestamp(2, pedido.getFecha());
             stmt.setInt(3, pedido.getNumero());
             stmt.setString(4, pedido.getCalle());
             stmt.setString(5, pedido.getComuna());

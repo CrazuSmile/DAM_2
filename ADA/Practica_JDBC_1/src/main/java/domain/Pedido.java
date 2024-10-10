@@ -4,7 +4,7 @@
  */
 package domain;
 
-import java.sql.Date;
+import java.sql.*;
 
 /**
  *
@@ -14,13 +14,13 @@ public class Pedido {
 
     private int idPedido;
     private int idCliente;
-    private Date fecha;
+    private Timestamp fecha;
     private int numero;
     private String calle;
     private String comuna;
     private String ciudad;
 
-    public Pedido(int idPedido, int idCliente, Date fecha, int numero, String calle, String comuna, String ciudad) {
+    public Pedido(int idPedido, int idCliente, Timestamp fecha, int numero, String calle, String comuna, String ciudad) {
         this.idPedido = idPedido;
         this.idCliente = idCliente;
         this.fecha = fecha;
@@ -34,7 +34,7 @@ public class Pedido {
         this.idPedido = idPedido;
     }
 
-    public Pedido(int idCliente, Date fecha, int numero, String calle, String comuna, String ciudad) {
+    public Pedido(int idCliente, Timestamp fecha, int numero, String calle, String comuna, String ciudad) {
         this.idCliente = idCliente;
         this.fecha = fecha;
         this.numero = numero;
@@ -54,7 +54,7 @@ public class Pedido {
         return idCliente;
     }
 
-    public Date getFecha() {
+    public Timestamp getFecha() {
         return fecha;
     }
 
@@ -78,7 +78,7 @@ public class Pedido {
         this.idPedido = idPedido;
     }
 
-    public void setFecha(Date fecha) {
+    public void setFecha(Timestamp fecha) {
         this.fecha = fecha;
     }
 

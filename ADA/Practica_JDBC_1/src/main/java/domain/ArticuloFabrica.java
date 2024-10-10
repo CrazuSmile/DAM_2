@@ -25,7 +25,8 @@ public class ArticuloFabrica {
         this.idArticulo = idArticulo;
     }
 
-    public ArticuloFabrica(int existencias, float precio) {
+    public ArticuloFabrica(int idFabrica, int existencias, float precio) {
+        this.idFabrica = idFabrica;
         this.existencias = existencias;
         this.precio = precio;
     }
@@ -63,5 +64,10 @@ public class ArticuloFabrica {
     }
     
     
+    @Override
+    public String toString() {
+        return "ArticuloFabrica:\n idArticulo: " + idArticulo + ", idFabrica: " + idFabrica + ", existencias: " + existencias
+                + ", precio: " + precio;
+    }
     
 }
