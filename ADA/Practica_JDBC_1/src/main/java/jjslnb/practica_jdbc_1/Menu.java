@@ -11,13 +11,13 @@ import java.util.Scanner;
  *
  * @author juasanlop2
  */
-public class Menu {
+public class Menu extends MenuArticulos {
     private static final Scanner TCL = new Scanner(System.in);
 
     public static void main(String[] args) {
         int eleccion;
-
         do {
+            System.out.println("-------------------------------------------");
             System.out.println(
                     "Bienvenido, ¿en que tabla deseas entrar? \n\t1. Articulos. \n\t2. Articulos-Fabricas. \n\t3. Clientes. \n\t4. Detalles del Pedido. \n\t5. Direcciones. \n\t6. Fabricas. \n\t7. Pedidos \n(Pulse 0 para salir)");
             System.out.print("Eleccion: ");
@@ -25,6 +25,7 @@ public class Menu {
 
             switch (eleccion) {
                 case 1:
+                    menuArticulos();
                     break;
                 case 2:
                     break;
