@@ -179,7 +179,6 @@ public class DetallePedidoDAO {
     try (Connection conn = getConnection();
          PreparedStatement stmt = conn.prepareStatement(sql)) {
 
-        // Assignar l'any al paràmetre de la consulta
         stmt.setInt(1, any);
 
         try (ResultSet rs = stmt.executeQuery()) {
@@ -189,7 +188,7 @@ public class DetallePedidoDAO {
         }
     } catch (SQLException e) {
         e.printStackTrace();
-        throw e;  // Llençar l'excepció perquè la pugui gestionar qui cridi el mètode
+        throw e; 
     }
 
     return totalArticles;
