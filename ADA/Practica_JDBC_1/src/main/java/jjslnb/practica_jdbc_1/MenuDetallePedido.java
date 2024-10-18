@@ -24,6 +24,7 @@ public class MenuDetallePedido {
                     + "3. Insertar un nuevo detalle de pedido.\n"
                     + "4. Actualizar un detalle de pedido.\n"
                     + "5. Borrar un detalle de pedido.\n"
+                    + "6. Mostrar cantidad total por año \n"
                     + "(Pulse 0 para volver atrás)"
             );
             System.out.print("Elección: ");
@@ -44,6 +45,9 @@ public class MenuDetallePedido {
                     break;
                 case 5:
                     borrar();
+                    break;
+                case 6:
+                    mostrarAny();
                     break;
                 case 0:
                     System.out.println("<-");
@@ -123,6 +127,20 @@ public class MenuDetallePedido {
 
         int registrosBorrados = DETALLE_PEDIDO_DAO.delete(detallePedido);
         System.out.println("Se borraron " + registrosBorrados + " registros.");
+
+    }
+
+    private static void mostrarAny() {
+        System.out.print("Año para comprobar la cantidad de articulos: ");
+        int any = TCL.nextInt();
+        TCL.nextLine();
+
+        try {
+            int totalArticles = DETALLE_PEDIDO_DAO.calcularQuantitatTotalArticlesAny(any);
+            System.out.println("Total d'articles en comandes del 2023: " + totalArticles);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 
     }
 }

@@ -31,9 +31,9 @@ public class FabricaDAO {
             rs = stmt.executeQuery();
 
             while (rs.next()) {
-                int idFabrica = rs.getInt(fabrica.getIdFabrica());
-                String telefono = rs.getString(fabrica.getTelefono());
-                int articulosProvistos = rs.getInt(fabrica.getArticulosProvistos());
+                int idFabrica = rs.getInt("id_fabrica");
+                String telefono = rs.getString("telefono");
+                int articulosProvistos = rs.getInt("articulos_provistos");
                 fabrica = new Fabrica(idFabrica, telefono, articulosProvistos);
                 fabricas.add(fabrica);
             }
@@ -63,9 +63,9 @@ public class FabricaDAO {
             rs = stmt.executeQuery();
 
             while (rs.next()) {
-                int idFabrica = rs.getInt(fabrica.getIdFabrica());
-                String telefono = rs.getString(fabrica.getTelefono());
-                int articulosProvistos = rs.getInt(fabrica.getArticulosProvistos());
+                int idFabrica = rs.getInt("id_fabrica");
+                String telefono = rs.getString("telefono");
+                int articulosProvistos = rs.getInt("articulos_provistos");
                 fabrica = new Fabrica(idFabrica, telefono, articulosProvistos);
                 fabricas.add(fabrica);
             }
@@ -163,7 +163,7 @@ public class FabricaDAO {
     }
 
     private static final String SQL_DELETE_FABRICAS_SENSE_COMANDES
-            = "DELETE FROM fabricas "
+            = "DELETE FROM fabrica "
             + "WHERE id_fabrica NOT IN ("
             + "    SELECT af.id_fabrica "
             + "    FROM articulo_fabrica af "

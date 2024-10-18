@@ -4,7 +4,7 @@
  */
 package datos;
 
-import domain.Fabrica;
+import domain.DetallePedido;
 import java.util.List;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.AfterAll;
@@ -17,9 +17,9 @@ import static org.junit.jupiter.api.Assertions.*;
  *
  * @author juasanlop2
  */
-public class FabricaDAOTest {
+public class DetallePedidoDAOTest {
     
-    public FabricaDAOTest() {
+    public DetallePedidoDAOTest() {
     }
     
     @BeforeAll
@@ -39,15 +39,17 @@ public class FabricaDAOTest {
     }
 
     /**
-     * Test of esborrarFabriquesSenseComandes method, of class FabricaDAO.
+     * Test of calcularQuantitatTotalArticlesAny method, of class DetallePedidoDAO.
      */
     @Test
-    public void testEsborrarFabriquesSenseComandes() throws Exception {
-        System.out.println("esborrarFabriquesSenseComandes");
-        FabricaDAO instance = new FabricaDAO();
+    public void testCalcularQuantitatTotalArticlesAny() throws Exception {
+        System.out.println("calcularQuantitatTotalArticlesAny");
+        int any = 0;
+        DetallePedidoDAO instance = new DetallePedidoDAO();
         int expResult = 0;
-        int result = instance.esborrarFabriquesSenseComandes();
+        int result = instance.calcularQuantitatTotalArticlesAny(any);
         assertEquals(expResult, result);
+
     }
     
 }
