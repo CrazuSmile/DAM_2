@@ -26,7 +26,8 @@ public class Direccion {
         this.ciudad = ciudad;
     }
 
-    public Direccion(int numero, String calle, String comuna, String ciudad) {
+    public Direccion(int idCliente, int numero, String calle, String comuna, String ciudad) {
+        this.idCliente = idCliente;
         this.numero = numero;
         this.calle = calle;
         this.comuna = comuna;
@@ -37,10 +38,7 @@ public class Direccion {
         this.idDircciones = idDircciones;
     }
 
-    public Direccion(int idDircciones, int idCliente) {
-        this.idDircciones = idDircciones;
-        this.idCliente = idCliente;
-    }
+
 
     public Direccion() {
     }

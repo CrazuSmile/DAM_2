@@ -1,7 +1,5 @@
 package datos;
 
-import static datos.Conexion.*;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -9,10 +7,12 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import static datos.Conexion.getConnection;
 import domain.Fabrica;
 
 public class FabricaDAO {
-private static final String SQL_SELECT = "SELECT * FROM fabrica";
+
+    private static final String SQL_SELECT = "SELECT * FROM fabrica";
     private static final String SQL_SELECTONE = "SELECT * FROM fabrica WHERE id_fabrica = ?";
     private static final String SQL_INSERT = "INSERT INTO fabrica (telefono, articulos_provistos) VALUES (?,?)";
     private static final String SQL_UPDATE = "UPDATE fabrica SET telefono = ?, articulos_provistos = ? WHERE id_articulo = ?";
@@ -160,5 +160,33 @@ private static final String SQL_SELECT = "SELECT * FROM fabrica";
             }
         }
         return registros;
+    }
+
+    private static final String SQL_DELETE_FABRICAS_SENSE_COMANDES
+            = "DELETE FROM fabricas "
+            + "WHERE id_fabrica NOT IN ("
+            + "    SELECT af.id_fabrica "
+            + "    FROM articulo_fabrica af "
+            + "    JOIN detalle_pedido dp ON af.id_articulo = dp.id_articulo"
+            + ");";
+
+    public int esborrarFabriquesSenseComandes() throws SQLException {
+        Connection conn = null;
+        PreparedStatement stmt = null;
+        int rowsAffected = 0;
+
+        try {
+            conn = Conexion.getConnection();
+            stmt = conn.prepareStatement(SQL_DELETE_FABRICAS_SENSE_COMANDES);
+            rowsAffected = stmt.executeUpdate();
+
+            System.out.println("S'han esborrat " + rowsAffected + " fàbriques sense comandes.");
+
+        } finally {
+            Conexion.close(stmt);
+            Conexion.close(conn);
+        }
+
+        return rowsAffected;
     }
 }
