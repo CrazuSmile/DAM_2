@@ -1,4 +1,4 @@
-package ejercicio2;
+package com.example;
 
 import java.io.*;
 
@@ -8,10 +8,7 @@ public class Leerweb {
         BufferedReader br = new BufferedReader(in);
         String webs;
         try {
-            System.out.println("Introduzca cadena a enviar:");
-            webs = br.readLine();
-            in.close();
-            String[] web = webs.split("@");	
+            
         } catch (Exception e) {
             e.printStackTrace();
         }
