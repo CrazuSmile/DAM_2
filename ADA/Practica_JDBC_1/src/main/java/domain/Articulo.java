@@ -45,6 +45,5 @@ public class Articulo {
     public String toString() {
         return "Articulo:\n" + "idArticulo=" + idArticulo + ", descripcion=" + descripcion;
     }
-    
-    
+
 }

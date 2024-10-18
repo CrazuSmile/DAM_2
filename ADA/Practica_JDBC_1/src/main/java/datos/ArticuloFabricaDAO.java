@@ -1,7 +1,5 @@
 package datos;
 
-import static datos.Conexion.*;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -9,12 +7,13 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import static datos.Conexion.getConnection;
 import domain.ArticuloFabrica;
 
 public class ArticuloFabricaDAO {
     private static final String SQL_SELECT = "SELECT * FROM articulo_fabrica";
     private static final String SQL_SELECTONE = "SELECT * FROM articulo_fabrica WHERE id_articulo = ?";
-    private static final String SQL_INSERT = "INSERT INTO articulo_fabrica (id_fabrica, existencias, precio) VALUES (?,?,?)";
+    private static final String SQL_INSERT = "INSERT INTO articulo_fabrica (id_articulo, id_fabrica, existencias, precio) VALUES (?,?,?,?)";
     private static final String SQL_UPDATE = "UPDATE articulo_fabrica SET id_fabrica = ?, existencias = ?, precio = ? WHERE id_articulo = ?";
     private static final String SQL_DELETE = "DELETE FROM articulo_fabrica WHERE id_articulo = ?";
 
@@ -31,14 +30,13 @@ public class ArticuloFabricaDAO {
             rs = stmt.executeQuery();
 
             while (rs.next()) {
-                int idArticulo = rs.getInt(articulo.getIdArticulo());
-                int idFabrica = rs.getInt(articulo.getIdFabrica());
-                int existencias = rs.getInt(articulo.getExistencias());
-                float precio = rs.getFloat(articulo.getExistencias());
+                int idArticulo = rs.getInt("id_articulo"); 
+                int idFabrica = rs.getInt("id_fabrica");
+                int existencias = rs.getInt("existencias");
+                float precio = rs.getFloat("precio");
                 articulo = new ArticuloFabrica(idArticulo, idFabrica, existencias, precio);
                 articulos.add(articulo);
             }
-
         } catch (SQLException ex) {
             ex.printStackTrace(System.out);
         } finally {
@@ -64,10 +62,10 @@ public class ArticuloFabricaDAO {
             rs = stmt.executeQuery();
 
             while (rs.next()) {
-                int idArticulo = rs.getInt(articulo.getIdArticulo());
-                int idFabrica = rs.getInt(articulo.getIdFabrica());
-                int existencias = rs.getInt(articulo.getExistencias());
-                float precio = rs.getFloat(articulo.getExistencias());
+                int idArticulo = rs.getInt("id_articulo");
+                int idFabrica = rs.getInt("id_fabrica");
+                int existencias = rs.getInt("existencias");
+                float precio = rs.getFloat("precio");
                 articulo = new ArticuloFabrica(idArticulo, idFabrica, existencias, precio);
                 articulos.add(articulo);
 
@@ -93,9 +91,10 @@ public class ArticuloFabricaDAO {
         try {
             conn = Conexion.getConnection();
             stmt = conn.prepareStatement(SQL_INSERT);
-            stmt.setInt(1, articulo.getIdFabrica());
-            stmt.setInt(2, articulo.getExistencias());
-            stmt.setFloat(3, articulo.getPrecio());
+            stmt.setInt(1, articulo.getIdArticulo());
+            stmt.setInt(2, articulo.getIdFabrica());
+            stmt.setInt(3, articulo.getExistencias());
+            stmt.setFloat(4, articulo.getPrecio());
             registros = stmt.executeUpdate();
 
         } catch (SQLException ex) {

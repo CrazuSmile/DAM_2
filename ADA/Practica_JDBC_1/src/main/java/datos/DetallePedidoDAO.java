@@ -167,4 +167,31 @@ public class DetallePedidoDAO {
         }
         return registros;
     }
+    
+    public int calcularQuantitatTotalArticlesAny(int any) throws SQLException {
+    String sql = "SELECT SUM(dp.cantidad) AS total_articles " +
+                 "FROM Pedido p " +
+                 "JOIN DetallePedido dp ON p.idPedido = dp.idPedido " +
+                 "WHERE YEAR(p.fecha) = ?";
+
+    int totalArticles = 0;
+
+    try (Connection conn = getConnection();
+         PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+        stmt.setInt(1, any);
+
+        try (ResultSet rs = stmt.executeQuery()) {
+            if (rs.next()) {
+                totalArticles = rs.getInt("total_articles");
+            }
+        }
+    } catch (SQLException e) {
+        e.printStackTrace();
+        throw e; 
+    }
+
+    return totalArticles;
+}
+
 }

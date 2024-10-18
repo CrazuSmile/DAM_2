@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Pedido.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Practica_JDBC_1</a> &gt; <a href="index.source.html" class="el_package">domain</a> &gt; <span class="el_source">Pedido.java</span></div><h1>Pedido.java</h1><pre class="source lang-java linenums">/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
+package domain;
+
+import java.sql.*;
+
+/**
+ *
+ * @author juasanlop2
+ */
+public class Pedido {
+
+    private int idPedido;
+    private int idCliente;
+    private Timestamp fecha;
+    private int numero;
+    private String calle;
+    private String comuna;
+    private String ciudad;
+
+<span class="nc" id="L23">    public Pedido(int idPedido, int idCliente, Timestamp fecha, int numero, String calle, String comuna, String ciudad) {</span>
+<span class="nc" id="L24">        this.idPedido = idPedido;</span>
+<span class="nc" id="L25">        this.idCliente = idCliente;</span>
+<span class="nc" id="L26">        this.fecha = fecha;</span>
+<span class="nc" id="L27">        this.numero = numero;</span>
+<span class="nc" id="L28">        this.calle = calle;</span>
+<span class="nc" id="L29">        this.comuna = comuna;</span>
+<span class="nc" id="L30">        this.ciudad = ciudad;</span>
+<span class="nc" id="L31">    }</span>
+
+<span class="nc" id="L33">    public Pedido(int idPedido) {</span>
+<span class="nc" id="L34">        this.idPedido = idPedido;</span>
+<span class="nc" id="L35">    }</span>
+
+<span class="nc" id="L37">    public Pedido(int idCliente, Timestamp fecha, int numero, String calle, String comuna, String ciudad) {</span>
+<span class="nc" id="L38">        this.idCliente = idCliente;</span>
+<span class="nc" id="L39">        this.fecha = fecha;</span>
+<span class="nc" id="L40">        this.numero = numero;</span>
+<span class="nc" id="L41">        this.calle = calle;</span>
+<span class="nc" id="L42">        this.comuna = comuna;</span>
+<span class="nc" id="L43">        this.ciudad = ciudad;</span>
+<span class="nc" id="L44">    }</span>
+
+<span class="nc" id="L46">    public Pedido() {</span>
+<span class="nc" id="L47">    }</span>
+
+    public int getIdPedido() {
+<span class="nc" id="L50">        return idPedido;</span>
+    }
+
+    public int getIdCliente() {
+<span class="nc" id="L54">        return idCliente;</span>
+    }
+
+    public Timestamp getFecha() {
+<span class="nc" id="L58">        return fecha;</span>
+    }
+
+    public int getNumero() {
+<span class="nc" id="L62">        return numero;</span>
+    }
+
+    public String getCalle() {
+<span class="nc" id="L66">        return calle;</span>
+    }
+
+    public String getComuna() {
+<span class="nc" id="L70">        return comuna;</span>
+    }
+
+    public String getCiudad() {
+<span class="nc" id="L74">        return ciudad;</span>
+    }
+
+    public void setIdPedido(int idPedido) {
+<span class="nc" id="L78">        this.idPedido = idPedido;</span>
+<span class="nc" id="L79">    }</span>
+
+    public void setFecha(Timestamp fecha) {
+<span class="nc" id="L82">        this.fecha = fecha;</span>
+<span class="nc" id="L83">    }</span>
+
+    public void setNumero(int numero) {
+<span class="nc" id="L86">        this.numero = numero;</span>
+<span class="nc" id="L87">    }</span>
+
+    public void setCalle(String calle) {
+<span class="nc" id="L90">        this.calle = calle;</span>
+<span class="nc" id="L91">    }</span>
+
+    public void setComuna(String comuna) {
+<span class="nc" id="L94">        this.comuna = comuna;</span>
+<span class="nc" id="L95">    }</span>
+
+    public void setCiudad(String ciudad) {
+<span class="nc" id="L98">        this.ciudad = ciudad;</span>
+<span class="nc" id="L99">    }</span>
+
+    @Override
+    public String toString() {
+<span class="nc" id="L103">        return &quot;Pedido: \n&quot; + &quot;idPedido: &quot; + idPedido + &quot;, idCliente: &quot; + idCliente + &quot;, fecha: &quot; + fecha + &quot;\n numero: &quot; + numero + &quot;, calle: &quot; + calle + &quot;, comuna: &quot; + comuna + &quot;, ciudad: &quot; + ciudad + '\n';</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

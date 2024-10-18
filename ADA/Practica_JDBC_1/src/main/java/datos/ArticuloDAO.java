@@ -4,14 +4,15 @@
  */
 package datos;
 
-import static datos.Conexion.getConnection;
-import domain.Articulo;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+
+import static datos.Conexion.getConnection;
+import domain.Articulo;
 
 /**
  *
@@ -22,8 +23,8 @@ public class ArticuloDAO {
     private static final String SQL_SELECT = "SELECT * FROM articulo";
     private static final String SQL_SELECTONE = "SELECT * FROM articulo WHERE id_articulo = ?";
     private static final String SQL_INSERT = "INSERT INTO articulo (descripcion) VALUES (?)";
-    private static final String SQL_UPDATE = "UPDATE articulo SET cantidad = ? WHERE id_articulo = ?";
-    private static final String SQL_DELETE = "DELETE FROM articulo WHERE id_artciulo = ?";
+    private static final String SQL_UPDATE = "UPDATE articulo SET descripcion = ? WHERE id_articulo = ?";
+    private static final String SQL_DELETE = "DELETE FROM articulo WHERE id_articulo = ?";
 
     public List<Articulo> seleccionar() throws SQLException {
         Connection conn = null;
@@ -38,8 +39,8 @@ public class ArticuloDAO {
             rs = stmt.executeQuery();
 
             while (rs.next()) {
-                int idArticulo = rs.getInt(articulo.getIdArticulo());
-                String descripcion = rs.getString(articulo.getDescripcion());
+                int idArticulo = rs.getInt("id_articulo");
+                String descripcion = rs.getString("descripcion");
                 articulo = new Articulo(idArticulo, descripcion);
                 articulos.add(articulo);
             }
@@ -69,8 +70,8 @@ public class ArticuloDAO {
             rs = stmt.executeQuery();
 
             while (rs.next()) {
-                int idArticulo = rs.getInt(articulo.getIdArticulo());
-                String descripcion = rs.getString(articulo.getDescripcion());
+                int idArticulo = rs.getInt("id_articulo");
+                String descripcion = rs.getString("descripcion");
                 articulo = new Articulo(idArticulo, descripcion);
                 articulos.add(articulo);
             }

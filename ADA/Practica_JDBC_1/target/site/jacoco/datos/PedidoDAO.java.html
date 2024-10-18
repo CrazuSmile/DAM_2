@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>PedidoDAO.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Practica_JDBC_1</a> &gt; <a href="index.source.html" class="el_package">datos</a> &gt; <span class="el_source">PedidoDAO.java</span></div><h1>PedidoDAO.java</h1><pre class="source lang-java linenums">/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
+package datos;
+
+import static datos.Conexion.getConnection;
+import domain.Pedido;
+import java.sql.Connection;
+import java.sql.*;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+
+/**
+ *
+ * @author juasanlop2
+ */
+<span class="nc" id="L21">public class PedidoDAO {</span>
+
+    private static final String SQL_SELECT = &quot;SELECT id_pedido, id_cliente, fecha_pedido, numero, Calle, Comuna, Ciudad FROM pedido&quot;;
+    private static final String SQL_SELECTONE = &quot;SELECT * FROM pedido WHERE id_pedido = ?&quot;;
+    private static final String SQL_INSERT = &quot;INSERT INTO pedido (id_cliente, fecha_pedido, numero, Calle, Comuna, Ciudad) VALUES (?,?,?,?,?,?)&quot;;
+    private static final String SQL_UPDATE = &quot;UPDATE pedido SET id_cliente = ?, fecha_pedido = ?, numero = ?, Calle = ?, Comuna = ?, Ciudad = ? WHERE id_pedido = ?&quot;;
+    private static final String SQL_DELETE = &quot;DELETE FROM cliente WHERE id_cliente = ?&quot;;
+
+    public List&lt;Pedido&gt; seleccionar() throws SQLException {
+<span class="nc" id="L30">        Connection conn = null;</span>
+<span class="nc" id="L31">        PreparedStatement stmt = null;</span>
+<span class="nc" id="L32">        ResultSet rs = null;</span>
+<span class="nc" id="L33">        Pedido pedido = null;</span>
+<span class="nc" id="L34">        List&lt;Pedido&gt; pedidos = new ArrayList&lt;&gt;();</span>
+
+        try {
+<span class="nc" id="L37">            conn = getConnection();</span>
+<span class="nc" id="L38">            stmt = conn.prepareStatement(SQL_SELECT);</span>
+<span class="nc" id="L39">            rs = stmt.executeQuery();</span>
+
+<span class="nc bnc" id="L41" title="All 2 branches missed.">            while (rs.next()) {</span>
+<span class="nc" id="L42">                int idPedido = rs.getInt(&quot;id_pedido&quot;);</span>
+<span class="nc" id="L43">                int idCliente = rs.getInt(&quot;idCliente&quot;);</span>
+<span class="nc" id="L44">                Timestamp fechaPedido = rs.getTimestamp(&quot;fecha_pedido&quot;);</span>
+<span class="nc" id="L45">                int numero = rs.getInt(&quot;numero&quot;);</span>
+<span class="nc" id="L46">                String calle = rs.getString(&quot;Calle&quot;);</span>
+<span class="nc" id="L47">                String comuna = rs.getString(&quot;Comuna&quot;);</span>
+<span class="nc" id="L48">                String ciudad = rs.getString(&quot;Ciudad&quot;);</span>
+<span class="nc" id="L49">                pedido = new Pedido(idPedido, idCliente, fechaPedido, numero, calle, comuna, ciudad);</span>
+<span class="nc" id="L50">                pedidos.add(pedido);</span>
+<span class="nc" id="L51">            }</span>
+
+<span class="nc" id="L53">        } catch (SQLException ex) {</span>
+<span class="nc" id="L54">            ex.printStackTrace(System.out);</span>
+        } finally {
+<span class="nc" id="L56">            Conexion.close(conn);</span>
+<span class="nc" id="L57">            Conexion.close(rs);</span>
+<span class="nc" id="L58">            Conexion.close(stmt);</span>
+        }
+
+<span class="nc" id="L61">        return pedidos;</span>
+    }
+    
+    public List&lt;Pedido&gt; seleccionarOne(Pedido pedidoId) throws SQLException {
+<span class="nc" id="L65">        Connection conn = null;</span>
+<span class="nc" id="L66">        PreparedStatement stmt = null;</span>
+<span class="nc" id="L67">        ResultSet rs = null;</span>
+<span class="nc" id="L68">        Pedido pedido = null;</span>
+<span class="nc" id="L69">        List&lt;Pedido&gt; pedidos = new ArrayList&lt;&gt;();</span>
+
+        try {
+<span class="nc" id="L72">            conn = getConnection();</span>
+<span class="nc" id="L73">            stmt = conn.prepareStatement(SQL_SELECTONE);</span>
+<span class="nc" id="L74">            stmt.setInt(1, pedidoId.getIdPedido());</span>
+<span class="nc" id="L75">            rs = stmt.executeQuery();</span>
+
+<span class="nc bnc" id="L77" title="All 2 branches missed.">            while (rs.next()) {</span>
+<span class="nc" id="L78">                int idPedido = rs.getInt(&quot;id_pedido&quot;);</span>
+<span class="nc" id="L79">                int idCliente = rs.getInt(&quot;idCliente&quot;);</span>
+<span class="nc" id="L80">                Timestamp fechaPedido = rs.getTimestamp(&quot;fecha_pedido&quot;);</span>
+<span class="nc" id="L81">                int numero = rs.getInt(&quot;numero&quot;);</span>
+<span class="nc" id="L82">                String calle = rs.getString(&quot;Calle&quot;);</span>
+<span class="nc" id="L83">                String comuna = rs.getString(&quot;Comuna&quot;);</span>
+<span class="nc" id="L84">                String ciudad = rs.getString(&quot;Ciudad&quot;);</span>
+<span class="nc" id="L85">                pedido = new Pedido(idPedido, idCliente, fechaPedido, numero, calle, comuna, ciudad);</span>
+<span class="nc" id="L86">                pedidos.add(pedido);</span>
+<span class="nc" id="L87">            }</span>
+
+<span class="nc" id="L89">        } catch (SQLException ex) {</span>
+<span class="nc" id="L90">            ex.printStackTrace(System.out);</span>
+        } finally {
+<span class="nc" id="L92">            Conexion.close(conn);</span>
+<span class="nc" id="L93">            Conexion.close(rs);</span>
+<span class="nc" id="L94">            Conexion.close(stmt);</span>
+        }
+
+<span class="nc" id="L97">        return pedidos;</span>
+    }
+
+    public int insertar(Pedido pedido) {
+<span class="nc" id="L101">        Connection conn = null;</span>
+<span class="nc" id="L102">        PreparedStatement stmt = null;</span>
+
+<span class="nc" id="L104">        int registros = 0;</span>
+
+        try {
+<span class="nc" id="L107">            conn = Conexion.getConnection();</span>
+<span class="nc" id="L108">            stmt = conn.prepareStatement(SQL_INSERT);</span>
+<span class="nc" id="L109">            stmt.setInt(1, pedido.getIdCliente());</span>
+<span class="nc" id="L110">            stmt.setTimestamp(2, pedido.getFecha());</span>
+<span class="nc" id="L111">            stmt.setInt(3, pedido.getNumero());</span>
+<span class="nc" id="L112">            stmt.setString(4, pedido.getCalle());</span>
+<span class="nc" id="L113">            stmt.setString(5, pedido.getComuna());</span>
+<span class="nc" id="L114">            stmt.setString(6, pedido.getCiudad());</span>
+<span class="nc" id="L115">            registros = stmt.executeUpdate();</span>
+
+<span class="nc" id="L117">        } catch (SQLException ex) {</span>
+<span class="nc" id="L118">            ex.printStackTrace(System.out);</span>
+        } finally {
+            try {
+<span class="nc" id="L121">                Conexion.close(stmt);</span>
+<span class="nc" id="L122">                Conexion.close(conn);</span>
+
+<span class="nc" id="L124">            } catch (SQLException ex) {</span>
+<span class="nc" id="L125">                ex.printStackTrace(System.out);</span>
+<span class="nc" id="L126">            }</span>
+        }
+<span class="nc" id="L128">        return registros;</span>
+    }
+
+    public int update(Pedido pedidoId, Pedido pedido) {
+<span class="nc" id="L132">        Connection conn = null;</span>
+<span class="nc" id="L133">        PreparedStatement stmt = null;</span>
+
+<span class="nc" id="L135">        int registros = 0;</span>
+
+        try {
+<span class="nc" id="L138">            conn = Conexion.getConnection();</span>
+<span class="nc" id="L139">            stmt = conn.prepareStatement(SQL_UPDATE);</span>
+<span class="nc" id="L140">            stmt.setInt(1, pedido.getIdCliente());</span>
+<span class="nc" id="L141">            stmt.setTimestamp(2, pedido.getFecha());</span>
+<span class="nc" id="L142">            stmt.setInt(3, pedido.getNumero());</span>
+<span class="nc" id="L143">            stmt.setString(4, pedido.getCalle());</span>
+<span class="nc" id="L144">            stmt.setString(5, pedido.getComuna());</span>
+<span class="nc" id="L145">            stmt.setString(6, pedido.getCiudad());</span>
+<span class="nc" id="L146">            registros = stmt.executeUpdate();</span>
+
+<span class="nc" id="L148">        } catch (SQLException ex) {</span>
+<span class="nc" id="L149">            ex.printStackTrace(System.out);</span>
+        } finally {
+            try {
+<span class="nc" id="L152">                Conexion.close(stmt);</span>
+<span class="nc" id="L153">                Conexion.close(conn);</span>
+
+<span class="nc" id="L155">            } catch (SQLException ex) {</span>
+<span class="nc" id="L156">                ex.printStackTrace(System.out);</span>
+<span class="nc" id="L157">            }</span>
+        }
+<span class="nc" id="L159">        return registros;</span>
+    }
+
+    public int delete(Pedido pedidoId) {
+<span class="nc" id="L163">        Connection conn = null;</span>
+<span class="nc" id="L164">        PreparedStatement stmt = null;</span>
+
+<span class="nc" id="L166">        int registros = 0;</span>
+
+        try {
+<span class="nc" id="L169">            conn = Conexion.getConnection();</span>
+<span class="nc" id="L170">            stmt = conn.prepareStatement(SQL_DELETE);</span>
+<span class="nc" id="L171">            stmt.setInt(1, pedidoId.getIdPedido());</span>
+<span class="nc" id="L172">            registros = stmt.executeUpdate();</span>
+
+<span class="nc" id="L174">        } catch (SQLException ex) {</span>
+<span class="nc" id="L175">            ex.printStackTrace(System.out);</span>
+        } finally {
+            try {
+<span class="nc" id="L178">                Conexion.close(stmt);</span>
+<span class="nc" id="L179">                Conexion.close(conn);</span>
+
+<span class="nc" id="L181">            } catch (SQLException ex) {</span>
+<span class="nc" id="L182">                ex.printStackTrace(System.out);</span>
+<span class="nc" id="L183">            }</span>
+        }
+<span class="nc" id="L185">        return registros;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>
