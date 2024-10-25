@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Menu.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Practica_JDBC_1</a> &gt; <a href="index.source.html" class="el_package">jjslnb.practica_jdbc_1</a> &gt; <span class="el_source">Menu.java</span></div><h1>Menu.java</h1><pre class="source lang-java linenums">/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Project/Maven2/JavaApp/src/main/java/${packagePath}/${mainClassName}.java to edit this template
+ */
+
+package jjslnb.practica_jdbc_1;
+
+import java.util.Scanner;
+
+/**
+ *
+ * @author juasanlop2
+ */
+<span class="nc" id="L14">public class Menu extends MenuArticulos {</span>
+<span class="nc" id="L15">    private static final Scanner TCL = new Scanner(System.in);</span>
+
+    public static void main(String[] args) {
+        int eleccion;
+        do {
+<span class="nc" id="L20">            System.out.println(&quot;-------------------------------------------&quot;);</span>
+<span class="nc" id="L21">            System.out.println(</span>
+                    &quot;Bienvenido, ¿en que tabla deseas entrar? \n\t1. Articulos. \n\t2. Articulos-Fabricas. \n\t3. Clientes. \n\t4. Detalles del Pedido. \n\t5. Direcciones. \n\t6. Fabricas. \n\t7. Pedidos \n(Pulse 0 para salir)&quot;);
+<span class="nc" id="L23">            System.out.print(&quot;Eleccion: &quot;);</span>
+<span class="nc" id="L24">            eleccion = TCL.nextInt();</span>
+
+<span class="nc bnc" id="L26" title="All 9 branches missed.">            switch (eleccion) {</span>
+                case 1:
+<span class="nc" id="L28">                    menuArticulos();</span>
+<span class="nc" id="L29">                    break;</span>
+                case 2:
+<span class="nc" id="L31">                    break;</span>
+                case 3:
+<span class="nc" id="L33">                    break;</span>
+                case 4:
+<span class="nc" id="L35">                    break;</span>
+                case 5:
+<span class="nc" id="L37">                    break;</span>
+                case 6:
+<span class="nc" id="L39">                    break;</span>
+                case 7:
+<span class="nc" id="L41">                    break;</span>
+                case 0:
+<span class="nc" id="L43">                    System.out.println(&quot;Adios&quot;);</span>
+<span class="nc" id="L44">                    break;</span>
+                default:
+<span class="nc" id="L46">                    System.out.println(&quot;No es una opcion valida.&quot;);</span>
+                    break;
+            }
+<span class="nc bnc" id="L49" title="All 2 branches missed.">        } while (eleccion != 0);</span>
+
+<span class="nc" id="L51">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ArticuloFabricaDAO.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Practica_JDBC_1</a> &gt; <a href="index.source.html" class="el_package">datos</a> &gt; <span class="el_source">ArticuloFabricaDAO.java</span></div><h1>ArticuloFabricaDAO.java</h1><pre class="source lang-java linenums">package datos;
+
+import static datos.Conexion.*;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+
+import domain.ArticuloFabrica;
+
+<span class="nc" id="L14">public class ArticuloFabricaDAO {</span>
+    private static final String SQL_SELECT = &quot;SELECT * FROM articulo_fabrica&quot;;
+    private static final String SQL_SELECTONE = &quot;SELECT * FROM articulo_fabrica WHERE id_articulo = ?&quot;;
+    private static final String SQL_INSERT = &quot;INSERT INTO articulo_fabrica (id_fabrica, existencias, precio) VALUES (?,?,?)&quot;;
+    private static final String SQL_UPDATE = &quot;UPDATE articulo_fabrica SET id_fabrica = ?, existencias = ?, precio = ? WHERE id_articulo = ?&quot;;
+    private static final String SQL_DELETE = &quot;DELETE FROM articulo_fabrica WHERE id_articulo = ?&quot;;
+
+    public List&lt;ArticuloFabrica&gt; seleccionar() throws SQLException {
+<span class="nc" id="L22">        Connection conn = null;</span>
+<span class="nc" id="L23">        PreparedStatement stmt = null;</span>
+<span class="nc" id="L24">        ResultSet rs = null;</span>
+<span class="nc" id="L25">        ArticuloFabrica articulo = null;</span>
+<span class="nc" id="L26">        List&lt;ArticuloFabrica&gt; articulos = new ArrayList&lt;&gt;();</span>
+
+        try {
+<span class="nc" id="L29">            conn = getConnection();</span>
+<span class="nc" id="L30">            stmt = conn.prepareStatement(SQL_SELECT);</span>
+<span class="nc" id="L31">            rs = stmt.executeQuery();</span>
+
+<span class="nc bnc" id="L33" title="All 2 branches missed.">            while (rs.next()) {</span>
+<span class="nc" id="L34">                int idArticulo = rs.getInt(articulo.getIdArticulo());</span>
+<span class="nc" id="L35">                int idFabrica = rs.getInt(articulo.getIdFabrica());</span>
+<span class="nc" id="L36">                int existencias = rs.getInt(articulo.getExistencias());</span>
+<span class="nc" id="L37">                float precio = rs.getFloat(articulo.getExistencias());</span>
+<span class="nc" id="L38">                articulo = new ArticuloFabrica(idArticulo, idFabrica, existencias, precio);</span>
+<span class="nc" id="L39">                articulos.add(articulo);</span>
+<span class="nc" id="L40">            }</span>
+
+<span class="nc" id="L42">        } catch (SQLException ex) {</span>
+<span class="nc" id="L43">            ex.printStackTrace(System.out);</span>
+        } finally {
+<span class="nc" id="L45">            Conexion.close(conn);</span>
+<span class="nc" id="L46">            Conexion.close(rs);</span>
+<span class="nc" id="L47">            Conexion.close(stmt);</span>
+        }
+
+<span class="nc" id="L50">        return articulos;</span>
+    }
+
+    public List&lt;ArticuloFabrica&gt; seleccionarOne(ArticuloFabrica articuloId) throws SQLException {
+<span class="nc" id="L54">        Connection conn = null;</span>
+<span class="nc" id="L55">        PreparedStatement stmt = null;</span>
+<span class="nc" id="L56">        ResultSet rs = null;</span>
+<span class="nc" id="L57">        ArticuloFabrica articulo = null;</span>
+<span class="nc" id="L58">        List&lt;ArticuloFabrica&gt; articulos = new ArrayList&lt;&gt;();</span>
+
+        try {
+<span class="nc" id="L61">            conn = getConnection();</span>
+<span class="nc" id="L62">            stmt = conn.prepareStatement(SQL_SELECTONE);</span>
+<span class="nc" id="L63">            stmt.setInt(1, articuloId.getIdArticulo());</span>
+<span class="nc" id="L64">            rs = stmt.executeQuery();</span>
+
+<span class="nc bnc" id="L66" title="All 2 branches missed.">            while (rs.next()) {</span>
+<span class="nc" id="L67">                int idArticulo = rs.getInt(articulo.getIdArticulo());</span>
+<span class="nc" id="L68">                int idFabrica = rs.getInt(articulo.getIdFabrica());</span>
+<span class="nc" id="L69">                int existencias = rs.getInt(articulo.getExistencias());</span>
+<span class="nc" id="L70">                float precio = rs.getFloat(articulo.getExistencias());</span>
+<span class="nc" id="L71">                articulo = new ArticuloFabrica(idArticulo, idFabrica, existencias, precio);</span>
+<span class="nc" id="L72">                articulos.add(articulo);</span>
+
+<span class="nc" id="L74">            }</span>
+
+<span class="nc" id="L76">        } catch (SQLException ex) {</span>
+<span class="nc" id="L77">            ex.printStackTrace(System.out);</span>
+        } finally {
+<span class="nc" id="L79">            Conexion.close(conn);</span>
+<span class="nc" id="L80">            Conexion.close(rs);</span>
+<span class="nc" id="L81">            Conexion.close(stmt);</span>
+        }
+
+<span class="nc" id="L84">        return articulos;</span>
+    }
+
+    public int insertar(ArticuloFabrica articulo) {
+<span class="nc" id="L88">        Connection conn = null;</span>
+<span class="nc" id="L89">        PreparedStatement stmt = null;</span>
+
+<span class="nc" id="L91">        int registros = 0;</span>
+
+        try {
+<span class="nc" id="L94">            conn = Conexion.getConnection();</span>
+<span class="nc" id="L95">            stmt = conn.prepareStatement(SQL_INSERT);</span>
+<span class="nc" id="L96">            stmt.setInt(1, articulo.getIdFabrica());</span>
+<span class="nc" id="L97">            stmt.setInt(2, articulo.getExistencias());</span>
+<span class="nc" id="L98">            stmt.setFloat(3, articulo.getPrecio());</span>
+<span class="nc" id="L99">            registros = stmt.executeUpdate();</span>
+
+<span class="nc" id="L101">        } catch (SQLException ex) {</span>
+<span class="nc" id="L102">            ex.printStackTrace(System.out);</span>
+        } finally {
+            try {
+<span class="nc" id="L105">                Conexion.close(stmt);</span>
+<span class="nc" id="L106">                Conexion.close(conn);</span>
+
+<span class="nc" id="L108">            } catch (SQLException ex) {</span>
+<span class="nc" id="L109">                ex.printStackTrace(System.out);</span>
+<span class="nc" id="L110">            }</span>
+        }
+<span class="nc" id="L112">        return registros;</span>
+    }
+
+    public int update(ArticuloFabrica articuloId, ArticuloFabrica articulo) {
+<span class="nc" id="L116">        Connection conn = null;</span>
+<span class="nc" id="L117">        PreparedStatement stmt = null;</span>
+
+<span class="nc" id="L119">        int registros = 0;</span>
+
+        try {
+<span class="nc" id="L122">            conn = Conexion.getConnection();</span>
+<span class="nc" id="L123">            stmt = conn.prepareStatement(SQL_UPDATE);</span>
+<span class="nc" id="L124">            stmt.setInt(1, articulo.getIdFabrica());</span>
+<span class="nc" id="L125">            stmt.setInt(2, articulo.getExistencias());</span>
+<span class="nc" id="L126">            stmt.setFloat(3, articulo.getPrecio());</span>
+<span class="nc" id="L127">            stmt.setInt(4, articuloId.getIdArticulo());</span>
+<span class="nc" id="L128">            registros = stmt.executeUpdate();</span>
+
+<span class="nc" id="L130">        } catch (SQLException ex) {</span>
+<span class="nc" id="L131">            ex.printStackTrace(System.out);</span>
+        } finally {
+            try {
+<span class="nc" id="L134">                Conexion.close(stmt);</span>
+<span class="nc" id="L135">                Conexion.close(conn);</span>
+
+<span class="nc" id="L137">            } catch (SQLException ex) {</span>
+<span class="nc" id="L138">                ex.printStackTrace(System.out);</span>
+<span class="nc" id="L139">            }</span>
+        }
+<span class="nc" id="L141">        return registros;</span>
+    }
+
+    public int delete(ArticuloFabrica articuloId) {
+<span class="nc" id="L145">        Connection conn = null;</span>
+<span class="nc" id="L146">        PreparedStatement stmt = null;</span>
+
+<span class="nc" id="L148">        int registros = 0;</span>
+
+        try {
+<span class="nc" id="L151">            conn = Conexion.getConnection();</span>
+<span class="nc" id="L152">            stmt = conn.prepareStatement(SQL_DELETE);</span>
+<span class="nc" id="L153">            stmt.setInt(1, articuloId.getIdArticulo());</span>
+<span class="nc" id="L154">            registros = stmt.executeUpdate();</span>
+
+<span class="nc" id="L156">        } catch (SQLException ex) {</span>
+<span class="nc" id="L157">            ex.printStackTrace(System.out);</span>
+        } finally {
+            try {
+<span class="nc" id="L160">                Conexion.close(stmt);</span>
+<span class="nc" id="L161">                Conexion.close(conn);</span>
+
+<span class="nc" id="L163">            } catch (SQLException ex) {</span>
+<span class="nc" id="L164">                ex.printStackTrace(System.out);</span>
+<span class="nc" id="L165">            }</span>
+        }
+<span class="nc" id="L167">        return registros;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

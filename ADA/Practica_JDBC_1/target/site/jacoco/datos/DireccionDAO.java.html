@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>DireccionDAO.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Practica_JDBC_1</a> &gt; <a href="index.source.html" class="el_package">datos</a> &gt; <span class="el_source">DireccionDAO.java</span></div><h1>DireccionDAO.java</h1><pre class="source lang-java linenums">/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
+package datos;
+
+import static datos.Conexion.getConnection;
+import domain.Direccion;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+
+/**
+ *
+ * @author juasanlop2
+ */
+<span class="nc" id="L20">public class DireccionDAO {</span>
+
+    private static final String SQL_SELECT = &quot;SELECT id_direccion, id_cliente, numero, calle, comuna, ciudad FROM direcciones_envio&quot;;
+    private static final String SQL_SELECTONE = &quot;SELECT * FROM direccion_envio WHERE id_direccion = ?&quot;;
+    private static final String SQL_INSERT = &quot;INSERT INTO direcciones_envio (numero, calle, comuna, ciudad) VALUES (?,?,?,?,?)&quot;;
+    private static final String SQL_UPDATE = &quot;UPDATE direcciones_envio SET numero = ?, calle = ?, comuna = ?, ciudad = ? WHERE id_direcciones = ?&quot;;
+    private static final String SQL_DELETE = &quot;DELETE FROM direcciones WHERE id_direcciones = ?&quot;;
+
+    public List&lt;Direccion&gt; seleccionar() throws SQLException {
+<span class="nc" id="L29">        Connection conn = null;</span>
+<span class="nc" id="L30">        PreparedStatement stmt = null;</span>
+<span class="nc" id="L31">        ResultSet rs = null;</span>
+<span class="nc" id="L32">        Direccion direccion = null;</span>
+<span class="nc" id="L33">        List&lt;Direccion&gt; direcciones = new ArrayList&lt;&gt;();</span>
+
+        try {
+<span class="nc" id="L36">            conn = getConnection();</span>
+<span class="nc" id="L37">            stmt = conn.prepareStatement(SQL_SELECT);</span>
+<span class="nc" id="L38">            rs = stmt.executeQuery();</span>
+
+<span class="nc bnc" id="L40" title="All 2 branches missed.">            while (rs.next()) {</span>
+<span class="nc" id="L41">                int idDireccion = rs.getInt(&quot;id_direccion&quot;);</span>
+<span class="nc" id="L42">                int idCliente = rs.getInt(&quot;id_cliente&quot;);</span>
+<span class="nc" id="L43">                int numero = rs.getInt(&quot;numero&quot;);</span>
+<span class="nc" id="L44">                String calle = rs.getString(&quot;calle&quot;);</span>
+<span class="nc" id="L45">                String comuna = rs.getString(&quot;comuna&quot;);</span>
+<span class="nc" id="L46">                String ciudad = rs.getString(&quot;ciudad&quot;);</span>
+<span class="nc" id="L47">                direccion = new Direccion(idDireccion, idCliente, numero, calle, comuna, ciudad);</span>
+<span class="nc" id="L48">                direcciones.add(direccion);</span>
+<span class="nc" id="L49">            }</span>
+
+<span class="nc" id="L51">        } catch (SQLException ex) {</span>
+<span class="nc" id="L52">            ex.printStackTrace(System.out);</span>
+        } finally {
+<span class="nc" id="L54">            Conexion.close(conn);</span>
+<span class="nc" id="L55">            Conexion.close(rs);</span>
+<span class="nc" id="L56">            Conexion.close(stmt);</span>
+        }
+
+<span class="nc" id="L59">        return direcciones;</span>
+    }
+
+    public List&lt;Direccion&gt; seleccionarOne(Direccion direccionId) throws SQLException {
+<span class="nc" id="L63">        Connection conn = null;</span>
+<span class="nc" id="L64">        PreparedStatement stmt = null;</span>
+<span class="nc" id="L65">        ResultSet rs = null;</span>
+<span class="nc" id="L66">        Direccion direccion = null;</span>
+<span class="nc" id="L67">        List&lt;Direccion&gt; direcciones = new ArrayList&lt;&gt;();</span>
+
+        try {
+<span class="nc" id="L70">            conn = getConnection();</span>
+<span class="nc" id="L71">            stmt = conn.prepareStatement(SQL_SELECTONE);</span>
+<span class="nc" id="L72">            stmt.setInt(1, direccionId.getIdDircciones());</span>
+<span class="nc" id="L73">            rs = stmt.executeQuery();</span>
+
+<span class="nc bnc" id="L75" title="All 2 branches missed.">            while (rs.next()) {</span>
+<span class="nc" id="L76">                int idDireccion = rs.getInt(&quot;id_direccion&quot;);</span>
+<span class="nc" id="L77">                int idCliente = rs.getInt(&quot;id_cliente&quot;);</span>
+<span class="nc" id="L78">                int numero = rs.getInt(&quot;numero&quot;);</span>
+<span class="nc" id="L79">                String calle = rs.getString(&quot;calle&quot;);</span>
+<span class="nc" id="L80">                String comuna = rs.getString(&quot;comuna&quot;);</span>
+<span class="nc" id="L81">                String ciudad = rs.getString(&quot;ciudad&quot;);</span>
+<span class="nc" id="L82">                direccion = new Direccion(idDireccion, idCliente, numero, calle, comuna, ciudad);</span>
+<span class="nc" id="L83">                direcciones.add(direccion);</span>
+<span class="nc" id="L84">            }</span>
+
+<span class="nc" id="L86">        } catch (SQLException ex) {</span>
+<span class="nc" id="L87">            ex.printStackTrace(System.out);</span>
+        } finally {
+<span class="nc" id="L89">            Conexion.close(conn);</span>
+<span class="nc" id="L90">            Conexion.close(rs);</span>
+<span class="nc" id="L91">            Conexion.close(stmt);</span>
+        }
+
+<span class="nc" id="L94">        return direcciones;</span>
+    }
+
+    public int insertar(Direccion direccion) {
+<span class="nc" id="L98">        Connection conn = null;</span>
+<span class="nc" id="L99">        PreparedStatement stmt = null;</span>
+
+<span class="nc" id="L101">        int registros = 0;</span>
+
+        try {
+<span class="nc" id="L104">            conn = Conexion.getConnection();</span>
+<span class="nc" id="L105">            stmt = conn.prepareStatement(SQL_INSERT);</span>
+<span class="nc" id="L106">            stmt.setInt(1, direccion.getNumero());</span>
+<span class="nc" id="L107">            stmt.setString(2, direccion.getCalle());</span>
+<span class="nc" id="L108">            stmt.setString(3, direccion.getComuna());</span>
+<span class="nc" id="L109">            stmt.setString(4, direccion.getCiudad());</span>
+<span class="nc" id="L110">            registros = stmt.executeUpdate();</span>
+
+<span class="nc" id="L112">        } catch (SQLException ex) {</span>
+<span class="nc" id="L113">            ex.printStackTrace(System.out);</span>
+        } finally {
+            try {
+<span class="nc" id="L116">                Conexion.close(stmt);</span>
+<span class="nc" id="L117">                Conexion.close(conn);</span>
+
+<span class="nc" id="L119">            } catch (SQLException ex) {</span>
+<span class="nc" id="L120">                ex.printStackTrace(System.out);</span>
+<span class="nc" id="L121">            }</span>
+        }
+<span class="nc" id="L123">        return registros;</span>
+    }
+
+    public int update(Direccion direccionId, Direccion direccion) {
+<span class="nc" id="L127">        Connection conn = null;</span>
+<span class="nc" id="L128">        PreparedStatement stmt = null;</span>
+
+<span class="nc" id="L130">        int registros = 0;</span>
+
+        try {
+<span class="nc" id="L133">            conn = Conexion.getConnection();</span>
+<span class="nc" id="L134">            stmt = conn.prepareStatement(SQL_UPDATE);</span>
+<span class="nc" id="L135">            stmt.setInt(1, direccion.getNumero());</span>
+<span class="nc" id="L136">            stmt.setString(2, direccion.getCalle());</span>
+<span class="nc" id="L137">            stmt.setString(3, direccion.getComuna());</span>
+<span class="nc" id="L138">            stmt.setString(4, direccion.getCiudad());</span>
+<span class="nc" id="L139">            stmt.setInt(5, direccionId.getIdDircciones());</span>
+<span class="nc" id="L140">            registros = stmt.executeUpdate();</span>
+
+<span class="nc" id="L142">        } catch (SQLException ex) {</span>
+<span class="nc" id="L143">            ex.printStackTrace(System.out);</span>
+        } finally {
+            try {
+<span class="nc" id="L146">                Conexion.close(stmt);</span>
+<span class="nc" id="L147">                Conexion.close(conn);</span>
+
+<span class="nc" id="L149">            } catch (SQLException ex) {</span>
+<span class="nc" id="L150">                ex.printStackTrace(System.out);</span>
+<span class="nc" id="L151">            }</span>
+        }
+<span class="nc" id="L153">        return registros;</span>
+    }
+
+    public int delete(Direccion direccionId) {
+<span class="nc" id="L157">        Connection conn = null;</span>
+<span class="nc" id="L158">        PreparedStatement stmt = null;</span>
+
+<span class="nc" id="L160">        int registros = 0;</span>
+
+        try {
+<span class="nc" id="L163">            conn = Conexion.getConnection();</span>
+<span class="nc" id="L164">            stmt = conn.prepareStatement(SQL_DELETE);</span>
+<span class="nc" id="L165">            stmt.setInt(1, direccionId.getIdDircciones());</span>
+<span class="nc" id="L166">            registros = stmt.executeUpdate();</span>
+
+<span class="nc" id="L168">        } catch (SQLException ex) {</span>
+<span class="nc" id="L169">            ex.printStackTrace(System.out);</span>
+        } finally {
+            try {
+<span class="nc" id="L172">                Conexion.close(stmt);</span>
+<span class="nc" id="L173">                Conexion.close(conn);</span>
+
+<span class="nc" id="L175">            } catch (SQLException ex) {</span>
+<span class="nc" id="L176">                ex.printStackTrace(System.out);</span>
+<span class="nc" id="L177">            }</span>
+        }
+<span class="nc" id="L179">        return registros;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

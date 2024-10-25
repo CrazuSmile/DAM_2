@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ArticuloDAO.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Practica_JDBC_1</a> &gt; <a href="index.source.html" class="el_package">datos</a> &gt; <span class="el_source">ArticuloDAO.java</span></div><h1>ArticuloDAO.java</h1><pre class="source lang-java linenums">/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
+package datos;
+
+import static datos.Conexion.getConnection;
+import domain.Articulo;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+
+/**
+ *
+ * @author juasanlop2
+ */
+<span class="nc" id="L20">public class ArticuloDAO {</span>
+
+    private static final String SQL_SELECT = &quot;SELECT * FROM articulo&quot;;
+    private static final String SQL_SELECTONE = &quot;SELECT * FROM articulo WHERE id_articulo = ?&quot;;
+    private static final String SQL_INSERT = &quot;INSERT INTO articulo (descripcion) VALUES (?)&quot;;
+    private static final String SQL_UPDATE = &quot;UPDATE articulo SET cantidad = ? WHERE id_articulo = ?&quot;;
+    private static final String SQL_DELETE = &quot;DELETE FROM articulo WHERE id_artciulo = ?&quot;;
+
+    public List&lt;Articulo&gt; seleccionar() throws SQLException {
+<span class="nc" id="L29">        Connection conn = null;</span>
+<span class="nc" id="L30">        PreparedStatement stmt = null;</span>
+<span class="nc" id="L31">        ResultSet rs = null;</span>
+<span class="nc" id="L32">        Articulo articulo = null;</span>
+<span class="nc" id="L33">        List&lt;Articulo&gt; articulos = new ArrayList&lt;&gt;();</span>
+
+        try {
+<span class="nc" id="L36">            conn = getConnection();</span>
+<span class="nc" id="L37">            stmt = conn.prepareStatement(SQL_SELECT);</span>
+<span class="nc" id="L38">            rs = stmt.executeQuery();</span>
+
+<span class="nc bnc" id="L40" title="All 2 branches missed.">            while (rs.next()) {</span>
+<span class="nc" id="L41">                int idArticulo = rs.getInt(articulo.getIdArticulo());</span>
+<span class="nc" id="L42">                String descripcion = rs.getString(articulo.getDescripcion());</span>
+<span class="nc" id="L43">                articulo = new Articulo(idArticulo, descripcion);</span>
+<span class="nc" id="L44">                articulos.add(articulo);</span>
+<span class="nc" id="L45">            }</span>
+
+<span class="nc" id="L47">        } catch (SQLException ex) {</span>
+<span class="nc" id="L48">            ex.printStackTrace(System.out);</span>
+        } finally {
+<span class="nc" id="L50">            Conexion.close(conn);</span>
+<span class="nc" id="L51">            Conexion.close(rs);</span>
+<span class="nc" id="L52">            Conexion.close(stmt);</span>
+        }
+
+<span class="nc" id="L55">        return articulos;</span>
+    }
+
+    public List&lt;Articulo&gt; seleccionarOne(Articulo articuloId) throws SQLException {
+<span class="nc" id="L59">        Connection conn = null;</span>
+<span class="nc" id="L60">        PreparedStatement stmt = null;</span>
+<span class="nc" id="L61">        ResultSet rs = null;</span>
+<span class="nc" id="L62">        Articulo articulo = null;</span>
+<span class="nc" id="L63">        List&lt;Articulo&gt; articulos = new ArrayList&lt;&gt;();</span>
+
+        try {
+<span class="nc" id="L66">            conn = getConnection();</span>
+<span class="nc" id="L67">            stmt = conn.prepareStatement(SQL_SELECTONE);</span>
+<span class="nc" id="L68">            stmt.setInt(1, articuloId.getIdArticulo());</span>
+<span class="nc" id="L69">            rs = stmt.executeQuery();</span>
+
+<span class="nc bnc" id="L71" title="All 2 branches missed.">            while (rs.next()) {</span>
+<span class="nc" id="L72">                int idArticulo = rs.getInt(articulo.getIdArticulo());</span>
+<span class="nc" id="L73">                String descripcion = rs.getString(articulo.getDescripcion());</span>
+<span class="nc" id="L74">                articulo = new Articulo(idArticulo, descripcion);</span>
+<span class="nc" id="L75">                articulos.add(articulo);</span>
+<span class="nc" id="L76">            }</span>
+
+<span class="nc" id="L78">        } catch (SQLException ex) {</span>
+<span class="nc" id="L79">            ex.printStackTrace(System.out);</span>
+        } finally {
+<span class="nc" id="L81">            Conexion.close(conn);</span>
+<span class="nc" id="L82">            Conexion.close(rs);</span>
+<span class="nc" id="L83">            Conexion.close(stmt);</span>
+        }
+
+<span class="nc" id="L86">        return articulos;</span>
+    }
+
+    public int insertar(Articulo articulo) {
+<span class="nc" id="L90">        Connection conn = null;</span>
+<span class="nc" id="L91">        PreparedStatement stmt = null;</span>
+
+<span class="nc" id="L93">        int registros = 0;</span>
+
+        try {
+<span class="nc" id="L96">            conn = Conexion.getConnection();</span>
+<span class="nc" id="L97">            stmt = conn.prepareStatement(SQL_INSERT);</span>
+<span class="nc" id="L98">            stmt.setString(1, articulo.getDescripcion());</span>
+<span class="nc" id="L99">            registros = stmt.executeUpdate();</span>
+
+<span class="nc" id="L101">        } catch (SQLException ex) {</span>
+<span class="nc" id="L102">            ex.printStackTrace(System.out);</span>
+        } finally {
+            try {
+<span class="nc" id="L105">                Conexion.close(stmt);</span>
+<span class="nc" id="L106">                Conexion.close(conn);</span>
+
+<span class="nc" id="L108">            } catch (SQLException ex) {</span>
+<span class="nc" id="L109">                ex.printStackTrace(System.out);</span>
+<span class="nc" id="L110">            }</span>
+        }
+<span class="nc" id="L112">        return registros;</span>
+    }
+
+    public int update(Articulo articuloId, Articulo articulo) {
+<span class="nc" id="L116">        Connection conn = null;</span>
+<span class="nc" id="L117">        PreparedStatement stmt = null;</span>
+
+<span class="nc" id="L119">        int registros = 0;</span>
+
+        try {
+<span class="nc" id="L122">            conn = Conexion.getConnection();</span>
+<span class="nc" id="L123">            stmt = conn.prepareStatement(SQL_UPDATE);</span>
+<span class="nc" id="L124">            stmt.setString(1, articulo.getDescripcion());</span>
+<span class="nc" id="L125">            stmt.setInt(2, articulo.getIdArticulo());</span>
+<span class="nc" id="L126">            registros = stmt.executeUpdate();</span>
+
+<span class="nc" id="L128">        } catch (SQLException ex) {</span>
+<span class="nc" id="L129">            ex.printStackTrace(System.out);</span>
+        } finally {
+            try {
+<span class="nc" id="L132">                Conexion.close(stmt);</span>
+<span class="nc" id="L133">                Conexion.close(conn);</span>
+
+<span class="nc" id="L135">            } catch (SQLException ex) {</span>
+<span class="nc" id="L136">                ex.printStackTrace(System.out);</span>
+<span class="nc" id="L137">            }</span>
+        }
+<span class="nc" id="L139">        return registros;</span>
+    }
+
+    public int delete(Articulo articuloId) {
+<span class="nc" id="L143">        Connection conn = null;</span>
+<span class="nc" id="L144">        PreparedStatement stmt = null;</span>
+
+<span class="nc" id="L146">        int registros = 0;</span>
+
+        try {
+<span class="nc" id="L149">            conn = Conexion.getConnection();</span>
+<span class="nc" id="L150">            stmt = conn.prepareStatement(SQL_DELETE);</span>
+<span class="nc" id="L151">            stmt.setInt(1, articuloId.getIdArticulo());</span>
+<span class="nc" id="L152">            registros = stmt.executeUpdate();</span>
+
+<span class="nc" id="L154">        } catch (SQLException ex) {</span>
+<span class="nc" id="L155">            ex.printStackTrace(System.out);</span>
+        } finally {
+            try {
+<span class="nc" id="L158">                Conexion.close(stmt);</span>
+<span class="nc" id="L159">                Conexion.close(conn);</span>
+
+<span class="nc" id="L161">            } catch (SQLException ex) {</span>
+<span class="nc" id="L162">                ex.printStackTrace(System.out);</span>
+<span class="nc" id="L163">            }</span>
+        }
+<span class="nc" id="L165">        return registros;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>
